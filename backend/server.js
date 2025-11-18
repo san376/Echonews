@@ -2,6 +2,11 @@ import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/mongodb.js'
+import cookieParser from "cookie-parser";
+import authRoute from './routes/auth.js';
+import router from './routes/newsroute.js';
+
+
 
 // app config
 const app = express()
@@ -12,12 +17,21 @@ connectDB()
 //middlewares
 
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+app.use(cookieParser());
 
 //api endpoints
 app.get('/',(req,res)=>{
     res.send('API WORKING GREAT')
+
 })
+
+app.use("/api/auth", authRoute);
+app.use("/api", router);
 
 app.listen(port, ()=> console.log("server started",port))
 

@@ -32,22 +32,29 @@ const Home = () => {
 
   const getInfo = async () => {
     try {
-      console.log("Fetching data...");
-      const url = "https://currentsapi.services/en/fonts/GeneralSans-Medium.woff"
+      // console.log("Fetching data...");
+      // const url = "https://currentsapi.services/en/fonts/GeneralSans-Medium.woff"
 
-      const response = await fetch(url, {
-        headers: {
-          "Authorization": "vfRElRbweEmpW6_uE1PQrgAsndar3QEEtJjSfZjnCnI7E-q-"   // replace with your key
-        }
-      });
+      // const response = await fetch(url, {
+      //   headers: {
+      //     "Authorization": "vfRElRbweEmpW6_uE1PQrgAsndar3QEEtJjSfZjnCnI7E-q-"   // replace with your key
+      //   }
+      // });
 
-      if (!response.ok) {
-        throw new Error("Failed with status " + response.status);
-      }
+      // if (!response.ok) {
+      //   throw new Error("Failed with status " + response.status);
+      // }
 
-      const json = await response.json();
-      console.log(json.news);
-      setArticles(json.news || []);
+      // const json = await response.json();
+      // console.log(json.news);
+      // setArticles(json.news || []);
+      console.log(1);
+      const res = await fetch("http://localhost:4000/api/news");
+      console.log(2);
+      const data = await res.json();
+      console.log(3);
+      console.log(data)
+      console.log(data.articles);
     } catch (error) {
       console.error("Error fetching:", error);
     }
@@ -55,24 +62,18 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <p 
-        onClick={getInfo} 
-        className="border p-2 rounded-3xl cursor-pointer bg-blue-200 hover:bg-blue-300"
-      >
-        Get Info
-      </p>
-
-      <div className="mt-4 space-y-3">
-        {articles.map((article, index) => (
-          <div key={index} className="border p-3 rounded-lg shadow">
-            <h2 className="font-bold">{article.title}</h2>
-            <p>{article.description}</p>
-            <a href={article.url} target="_blank" rel="noreferrer" className="text-blue-600 underline">
-              Read more
-            </a>
-          </div>
-        ))}
+      <div>
+        <p
+          onClick={getInfo}
+          className="border p-2 rounded-3xl cursor-pointer bg-blue-200 hover:bg-blue-300"
+        >
+          Get Info
+        </p>
       </div>
+      <div>
+        <p className='text-5xl mb-150 flex justify-center items-center mt-50'> How are You</p>
+      </div>
+
     </div>
   );
 };
